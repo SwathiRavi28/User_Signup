@@ -9,24 +9,23 @@ function FirstPage(props) {
     event.preventDefault()
     if (!/\S+@\S+\.\S+/.test(email)){
       swal("Enter valid email")
-return
+      return
     }
     props.history.push({
-      pathname: '/signin',
-      state: { email: email,page:"signup" }
+    pathname: '/signin',
+    state: { email: email,page:"signup" }
   });
   }
 
   return (
       <div className="container">
       <div className="container-items">
-       
           <h3>ENTER YOUR EMAIL</h3>
           <p> Email</p>
-          <input type="email" name="email" onChange={(e)=>setEmail(e.target.value)} />
+          <input type="email" className="email-tag" name="email" onChange={(e)=>setEmail(e.target.value)} />
           <button onClick={handleClick}>NEXT</button>
-        </div> 
-     </div>
+      </div> 
+      </div>
      
     )
 }

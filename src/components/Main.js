@@ -6,9 +6,11 @@ import swal from 'sweetalert';
 
 
 function Main(props) {
-    const [users,setUsers]=useState([])
+  const [users, setUsers] = useState([])
+
+  // GETTING USERS LIST
     useEffect(() => {
-        axios.get("https://testapi.webexcellis.in/api/users")
+        axios.get(`${process.env.REACT_APP_BASEURL}/api/users`)
             .then((res) => {
             if (res.status !== 200) {
                 swal("Oops!","Something went wrong!!");
@@ -18,12 +20,14 @@ function Main(props) {
             
           })
           .catch((err) => {
-          console.log(err)
+            swal("Oops!","Something went wrong!!");
         })
-    },[users])
+    }, [users])
+  
+  // DELETE THE ACCOUNT OF USER
     
     const handleDelete = (id) => {
-        axios.delete(`https://testapi.webexcellis.in/api/users/${id}`)
+        axios.delete(`${process.env.REACT_APP_BASEURL}/api/users/${id}`)
         .then((res) => {
           if (res.status == 200) {
             swal("Account Deleted!!");
@@ -33,17 +37,22 @@ function Main(props) {
         }
         })
         .catch((err) => {
-        console.log(err)
+          swal("Oops!","Something went wrong!!");
+            
         })
         
-    }
+  }
+
+  //SENDING ACCOUNT ID TO EDIT THE ACCOUNT DETAILS OF USER
+
     const handleEdit = (id) => {
         props.history.push({
             pathname: '/signin',
             state: { id: id ,page:"edit"}
         });
          
-    }
+  }
+  
     return (
         <div className="container-table" >
           <h1>View Users</h1>
@@ -63,7 +72,7 @@ function Main(props) {
             <td>{user.lastName}</td>
             <td >
             <i className="fa fa-pencil-square-o" style={{color:"#035397"}} onClick={()=>handleEdit(user.id)}></i>
-              <i className="fa fa-trash" style={{color:"#035397"}} onClick={()=>handleDelete(user.id)}></i>
+            <i className="fa fa-trash" style={{color:"#035397"}} onClick={()=>handleDelete(user.id)}></i>
             </td>
           </tr>
         ))
@@ -74,7 +83,7 @@ function Main(props) {
       )}
     </tbody>
   </table>
-        </div>
+  </div>
     )
 }
 
